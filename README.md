@@ -2,7 +2,8 @@
 ### Mapbox integration in Windy
 This plugin allows you to use your own mapbox style as a base map in windy.com
 
-####How to make a map with mapbox:
+####How to make a map with mapbox:####
+
 1) Go to https://www.mapbox.com/ and register a profile
 2) Go to https://studio.mapbox.com/ and create your map style
 3) Once you are finished in the style editor, press Publish
@@ -12,7 +13,8 @@ This plugin allows you to use your own mapbox style as a base map in windy.com
 5) Copy the preview style link and either share it in the forums or apply it with this plugin
 <img src="/docs/stepa5.png">
 
-####How to apply a mapbox style to Windy:
+####How to apply a mapbox style to Windy:####
+
 1) Go to https://www.windy.com/
 2) From the menu press "install windy plugin"
 <img src="/docs/stepb2.png">
