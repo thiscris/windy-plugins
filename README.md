@@ -5,17 +5,24 @@ How to make a map with mapbox:
 1) Go to https://www.mapbox.com/ and register a profile
 2) Go to https://studio.mapbox.com/ and create your map style
 3) Once you are finished in the style editor, press Publish
+<img src="/docs/stepa3.png">
 4) Back on the main page of studio.mapbox.com use the share button 
+<img src="/docs/stepa4.png">
 5) Copy the preview style link and either share it in the forums or apply it with this plugin
+<img src="/docs/stepa5.png">
 
 How to apply a mapbox style to Windy:
 1) Go to https://www.windy.com/
 2) From the menu press "install windy plugin"
+<img src="/docs/stepb2.png">
 3) Select "load plugin directly from npm"
 4) Enter the name windy-plugin-mapbox and press Load & Activate
+<img src="/docs/stepb4.png">
 5) Anywhere on the map press the right mouse button or hold your finger on the touchscreen to open the context menu
 6) Select mapbox plugin to open the options popup
+<img src="/docs/stepb6.png">
 7) Paste and load the preview link you got from the mapbox website or use one of the examples provided.
+8) If necessary, use the checkbox to redarange the layers and reduce the opacity of the overview
 
 ___
 

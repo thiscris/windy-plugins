@@ -12,7 +12,7 @@ W.loadPlugin(
   "author": "Hristo Dobrev",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/windycom/windy-plugins"
+    "url": "git+https://github.com/thiscris/windy-plugin-mapbox"
   },
   "description": "Windy plugin for integration of Mapbox map styles.",
   "displayName": "Mapbox plugin",
