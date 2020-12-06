@@ -1,7 +1,46 @@
 @import 'dev/variables.less';
 
-.onwindy-plugin-myname {
+// .onwindy-plugin-myname {
+// }
+
+#windy-plugin-mapbox {
+    position: fixed;
+    top: 103px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: .1em 2em .1em .5em;
+    z-index: 1000;
+    white-space: nowrap;
+    overflow: hidden;
+    color: #6b6b6b;
+    background-color: #f8f8f8;
+    box-sizing: border-box;
+    border: 1px solid #c1c1c1;
+    border-radius: 5px;
 }
 
-#windy-plugin-myname {
+#windy-plugin-mapbox .iconfont {
+    color: #ddd;
+    margin-right: .5em;
+    position: absolute;
+    right: -15px;
+    bottom: 0;
+    font-size: 40px;
+    z-index: -1;
+}
+
+#windy-plugin-mapbox .closing-x {
+    color: #9d0300;
+    font-size: 20px;
+    background: none;
+    display: block;
+    right: -5px;
+    top: -5px;
+}
+
+.lower-opac {
+    opacity: 0.5;
+}
+.back-pos {
+    z-Index: 9;
 }

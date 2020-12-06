@@ -1,11 +1,100 @@
 <plugin>
-    <b>This plugin will rock</b>
+    <input id="mapbox-plugin-input" type="text" data-ref="mapbox-style">
+    <small>
+        <button id="btn-mapbox-load">Load custom map</button></br>
+        <input type="checkbox" data-ref="box" id="mapbox-plugin-checkbox">
+        <label for="mapbox-plugin-layers" class="clickable noselect">Reduce overlay opacity and move mapbox layer behind it</label></br>
+        <button class="mapbox-btn-example" id="btn-example-1" data-mapboxStyle="https://api.mapbox.com/styles/v1/thiscris/cki9zxkouczj519qudpgudhop.html?fresh=true&title=view&access_token=pk.eyJ1IjoidGhpc2NyaXMiLCJhIjoiY2tpNzV5Y2hxMGxqNDMwbXE0bmRpdXBwYSJ9.HpVl6ea7-T8pzav2_qqcgg">Example #1</button>
+        <label for="btn-example-1" class="clickable noselect">Load example map style: Neon roads</label></br>
+        <button class="mapbox-btn-example" id="btn-example-2" data-mapboxStyle="https://api.mapbox.com/styles/v1/thiscris/cki7cufuv2kg919pi49mivxs1.html?fresh=true&title=view&access_token=pk.eyJ1IjoidGhpc2NyaXMiLCJhIjoiY2tpNzV5Y2hxMGxqNDMwbXE0bmRpdXBwYSJ9.HpVl6ea7-T8pzav2_qqcgg">Example #2</button>
+        <label for="btn-example-2" class="clickable noselect">Load example map style: Tolkien map</label>
+    </small>  
+    <div class="iconfont"></div>
+    <!-- <div class="closing-x"></div> -->
 
     <script>
         console.log('I am mounted to the page');
 
-        this.onopen = () => console.log('I am opened');
+        import map from '@windy/map';
+
+        //default example
+        let mapboxExample = 'https://api.mapbox.com/styles/v1/thiscris/cki9zxkouczj519qudpgudhop.html?fresh=true&title=view&access_token=pk.eyJ1IjoidGhpc2NyaXMiLCJhIjoiY2tpNzV5Y2hxMGxqNDMwbXE0bmRpdXBwYSJ9.HpVl6ea7-T8pzav2_qqcgg';   
+        //create my own layer group and add it to the map
+        let myGr = L.layerGroup().addTo(map);
+        let mb_input = document.getElementById("mapbox-plugin-input");
+        let ex_btns = document.getElementsByClassName("mapbox-btn-example");
+        let plugin_layer;
+
+
+        this.onopen = () => {
+            console.log('I am opened');
+            //SetCustomLayer(mapboxExample);
+
+        }
 
         this.onclose = () => console.log('I am being closed');
+
+
+        //listen for changes in the input box and load new map
+        document.getElementById("btn-mapbox-load").addEventListener('click', function(){
+            console.log("loading mapstyle "+mb_input.value);
+            SetCustomLayer(mb_input.value);
+        });
+        
+        document.getElementById("mapbox-plugin-checkbox").addEventListener('change', function () {
+            if( this.checked) {
+                document.querySelector(".overlay-layer").classList.add("lower-opac");
+                document.querySelector(".leaflet-layer").classList.add("lower-opac");
+                document.querySelector(".mapboxLayer").classList.add("back-pos");
+            } else {
+                document.querySelector(".overlay-layer").classList.remove("lower-opac");
+                document.querySelector(".leaflet-layer").classList.remove("lower-opac");
+                document.querySelector(".mapboxLayer").classList.remove("back-pos");
+            }
+        });
+
+        //Example buttons        
+        for (let i=0; i< ex_btns.length; i++) { 
+            ex_btns[i].addEventListener('click',function() {
+                let thisStyle = this.dataset.mapboxstyle;
+                console.log(thisStyle);
+                //check if this style is already loaded
+                if (document.getElementById("mapbox-plugin-input").value == thisStyle) {
+                    console.log("already loaded");
+                    return;
+                }
+
+                //change inputbox
+                mb_input.value = thisStyle;
+                document.getElementById("btn-mapbox-load").dispatchEvent(new Event('click'));
+            });
+        };
+
+
+
+        function SetCustomLayer (mapboxPrevLink) {
+            //check if this is a valid link
+
+
+
+            //take the Preview link from mapbox and extract the style and access_token
+            let token = mapboxPrevLink.match(/access_token=(\S*)$/)[1];
+            let style= mapboxPrevLink.match(/^(\S*)\.html/)[1];
+            //generate the style link
+            let mapboxStyle = style+ "/tiles/{z}/{x}/{y}?access_token=" +token;
+
+
+
+            //Remove old layer before adding a new one
+            if (plugin_layer != undefined) {
+                myGr.removeLayer(plugin_layer);
+            }
+            
+            //load a new layer
+            plugin_layer = L.tileLayer(mapboxStyle,{className:"mapboxLayer", tileSize:256})
+            myGr.addLayer(plugin_layer);
+        }   
+        
+
     </script>
 </plugin>
