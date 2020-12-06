@@ -1,3 +1,24 @@
+
+### Mapbox integration in Windy
+This plugin allows you to use your own mapbox style as a base map in windy.com
+How to make a map with mapbox:
+1) Go to https://www.mapbox.com/ and register a profile
+2) Go to https://studio.mapbox.com/ and create your map style
+3) Once you are finished in the style editor, press Publish
+4) Back on the main page of studio.mapbox.com use the share button 
+5) Copy the preview style link and either share it in the forums or apply it with this plugin
+
+How to apply a mapbox style to Windy:
+1) Go to https://www.windy.com/
+2) From the menu press "install windy plugin"
+3) Select "load plugin directly from npm"
+4) Enter the name windy-plugin-mapbox and press Load & Activate
+5) Anywhere on the map press the right mouse button or hold your finger on the touchscreen to open the context menu
+6) Select mapbox plugin to open the options popup
+7) Paste and load the preview link you got from the mapbox website or use one of the examples provided.
+
+___
+
 <p align="center"><img src="https://www.windy.com/img/logo201802/logo-full-windycom-gray-v3.svg"></p>
 
 ### Windy plugins
