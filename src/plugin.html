@@ -3,7 +3,9 @@
     <small>
         <button id="btn-mapbox-load">Load custom map</button></br>
         <input type="checkbox" data-ref="box" id="mapbox-plugin-checkbox">
-        <label for="mapbox-plugin-layers" class="clickable noselect">Reduce overlay opacity and move mapbox layer behind it</label></br>
+        <label for="mapbox-plugin-checkbox" class="clickable noselect">Reduce overlay opacity and move mapbox layer behind it</label></br>
+        <button class="mapbox-btn-def" id="btn-default" data-mapboxStyle="">Default map</button>
+        <label for="btn-default" class="clickable noselect">Load default map and labels</label></br>
         <button class="mapbox-btn-example" id="btn-example-1" data-mapboxStyle="https://api.mapbox.com/styles/v1/thiscris/cki9zxkouczj519qudpgudhop.html?fresh=true&title=view&access_token=pk.eyJ1IjoidGhpc2NyaXMiLCJhIjoiY2tpNzV5Y2hxMGxqNDMwbXE0bmRpdXBwYSJ9.HpVl6ea7-T8pzav2_qqcgg">Example #1</button>
         <label for="btn-example-1" class="clickable noselect">Load example map style: Neon roads</label></br>
         <button class="mapbox-btn-example" id="btn-example-2" data-mapboxStyle="https://api.mapbox.com/styles/v1/thiscris/cki7cufuv2kg919pi49mivxs1.html?fresh=true&title=view&access_token=pk.eyJ1IjoidGhpc2NyaXMiLCJhIjoiY2tpNzV5Y2hxMGxqNDMwbXE0bmRpdXBwYSJ9.HpVl6ea7-T8pzav2_qqcgg">Example #2</button>
@@ -19,11 +21,13 @@
 
         //default example
         let mapboxExample = 'https://api.mapbox.com/styles/v1/thiscris/cki9zxkouczj519qudpgudhop.html?fresh=true&title=view&access_token=pk.eyJ1IjoidGhpc2NyaXMiLCJhIjoiY2tpNzV5Y2hxMGxqNDMwbXE0bmRpdXBwYSJ9.HpVl6ea7-T8pzav2_qqcgg';   
+        let def_baselayer = map.baseLayer;
+        let def_labelayer = W.labelsLayer;
         //create my own layer group and add it to the map
         let myGr = L.layerGroup().addTo(map);
         let mb_input = document.getElementById("mapbox-plugin-input");
         let ex_btns = document.getElementsByClassName("mapbox-btn-example");
-        let plugin_layer;
+        let plugin_layer = '';
 
 
         this.onopen = () => {
@@ -71,24 +75,43 @@
         };
 
 
+        //Restore default settings
+        document.getElementById("btn-default").addEventListener('click', function () {
+            //remove added layer
+            if (plugin_layer != undefined) {
+                myGr.removeLayer(plugin_layer);
+            }
+            console.log(plugin_layer);
+            //restore default layers
+            def_baselayer.addTo(map);
+            def_labelayer.addTo(map);
+            plugin_layer ='';
+            //clear input box
+            mb_input.value ='';
+        });
+
+
 
         function SetCustomLayer (mapboxPrevLink) {
             //check if this is a valid link
-
+            //TODO
 
 
             //take the Preview link from mapbox and extract the style and access_token
             let token = mapboxPrevLink.match(/access_token=(\S*)$/)[1];
             let style= mapboxPrevLink.match(/^(\S*)\.html/)[1];
             //generate the style link
-            let mapboxStyle = style+ "/tiles/{z}/{x}/{y}?access_token=" +token;
+            let mapboxStyle = style+ "/tiles/256/{z}/{x}/{y}?access_token=" +token;
 
 
 
             //Remove old layer before adding a new one
-            if (plugin_layer != undefined) {
+            if (plugin_layer != '') {
                 myGr.removeLayer(plugin_layer);
             }
+            //Remove default layers (shouldn't we check for them first?)
+            def_baselayer.remove();
+            def_labelayer.remove();
             
             //load a new layer
             plugin_layer = L.tileLayer(mapboxStyle,{className:"mapboxLayer", tileSize:256})
